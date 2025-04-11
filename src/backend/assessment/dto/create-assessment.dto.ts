@@ -1,5 +1,6 @@
 import { IsEnum, IsMongoId, IsNotEmpty, IsObject } from "class-validator"
-import { AssessmentType } from "../entities/assessment.entity"
+import { AssessmentType } from "../schemas/assessment.entity"
+// import { AssessmentType } from "../entities/assessment.entity"
 
 export class CreateAssessmentDto {
   @IsNotEmpty()

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import { Document, Schema as MongooseSchema } from "mongoose"
-import type { User } from "../../users/entities/user.entity"
+import { User } from "src/backend/user/schemas/user.schema"
 
 export enum AssessmentType {
   QUIZ = "quiz",

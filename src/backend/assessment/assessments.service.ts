@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose"
 import type { Model } from "mongoose"
 import type { CreateAssessmentDto } from "./dto/create-assessment.dto"
 import type { UpdateAssessmentDto } from "./dto/update-assessment.dto"
-import { Assessment, type AssessmentType } from "./entities/assessment.entity"
+import { Assessment, AssessmentType } from "./schemas/assessment.entity"
 
 @Injectable()
 export class AssessmentsService {
