@@ -1,11 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from "@nestjs/common"
-import type { AssessmentsService } from "./assessments.service"
-import type { CreateAssessmentDto } from "./dto/create-assessment.dto"
-import type { UpdateAssessmentDto } from "./dto/update-assessment.dto"
+import { AssessmentsService } from "./assessments.service"
+import { CreateAssessmentDto } from "./dto/create-assessment.dto"
+import { UpdateAssessmentDto } from "./dto/update-assessment.dto"
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 import { AssessmentType } from "./schemas/assessment.entity";
-// import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard"
-// import type { AssessmentType } from "./entities/assessment.entity"
+
 
 @Controller("assessments")
 @UseGuards(JwtAuthGuard)

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from "@nestjs/common"
-import type { CheckInsService } from "./check-ins.service"
-import type { CreateCheckInDto } from "./dto/create-check-in.dto"
-import type { UpdateCheckInDto } from "./dto/update-check-in.dto"
+import { CheckInsService } from "./check-ins.service"
+import { CreateCheckInDto } from "./dto/create-check-in.dto"
+import { UpdateCheckInDto } from "./dto/update-check-in.dto"
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard"
 
 @Controller("check-ins")

@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
-import type { Model } from "mongoose"
-import type { CreateFeedbackDto } from "./dto/create-feedback.dto"
-import type { UpdateFeedbackDto } from "./dto/update-feedback.dto"
+import { Model } from "mongoose"
+import { CreateFeedbackDto } from "./dto/create-feedback.dto"
+import { UpdateFeedbackDto } from "./dto/update-feedback.dto"
 import { Feedback } from "./schemas/feedback.entity"
 @Injectable()
 export class FeedbackService {

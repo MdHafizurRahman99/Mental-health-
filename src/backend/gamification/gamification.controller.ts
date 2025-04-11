@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common"
-import type { GamificationService } from "./gamification.service"
-import type { CreateGamificationDto } from "./dto/create-gamification.dto"
-import type { UpdateGamificationDto } from "./dto/update-gamification.dto"
+import { GamificationService } from "./gamification.service"
+import { CreateGamificationDto } from "./dto/create-gamification.dto"
+import { UpdateGamificationDto } from "./dto/update-gamification.dto"
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard"
 
 @Controller("gamification")

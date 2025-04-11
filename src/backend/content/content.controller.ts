@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from "@nestjs/common"
-import type { ContentService } from "./content.service"
-import type { CreateContentDto } from "./dto/create-content.dto"
-import type { UpdateContentDto } from "./dto/update-content.dto"
+import { ContentService } from "./content.service"
+import { CreateContentDto } from "./dto/create-content.dto"
+import { UpdateContentDto } from "./dto/update-content.dto"
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 import { UserRole } from "../user/schemas/user.schema";
 import { RolesGuard } from "src/auth/guards/roles.guard";

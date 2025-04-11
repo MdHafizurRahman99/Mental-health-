@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException, ConflictException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
-import type { Model } from "mongoose"
-import type { CreateGamificationDto } from "./dto/create-gamification.dto"
-import type { UpdateGamificationDto } from "./dto/update-gamification.dto"
+import { Model } from "mongoose"
+import { CreateGamificationDto } from "./dto/create-gamification.dto"
+import { UpdateGamificationDto } from "./dto/update-gamification.dto"
 import { Gamification } from "./schemas/gamification.entity"
 
 @Injectable()

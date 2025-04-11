@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
-import type { Model } from "mongoose"
-import type { CreateAiLogDto } from "./dto/create-ai-log.dto"
-import type { UpdateAiLogDto } from "./dto/update-ai-log.dto"
+import { Model } from "mongoose"
+import { CreateAiLogDto } from "./dto/create-ai-log.dto"
+import { UpdateAiLogDto } from "./dto/update-ai-log.dto"
 import { AiLog, InteractionType } from "./schemas/ai-log.entity"
 
 @Injectable()

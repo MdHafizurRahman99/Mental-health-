@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from "@nestjs/common"
-import type { FeedbackService } from "./feedback.service"
-import type { CreateFeedbackDto } from "./dto/create-feedback.dto"
-import type { UpdateFeedbackDto } from "./dto/update-feedback.dto"
+import { FeedbackService } from "./feedback.service"
+import { CreateFeedbackDto } from "./dto/create-feedback.dto"
+import { UpdateFeedbackDto } from "./dto/update-feedback.dto"
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 import { RolesGuard } from "src/auth/guards/roles.guard";
 import { UserRole } from "../user/schemas/user.schema";

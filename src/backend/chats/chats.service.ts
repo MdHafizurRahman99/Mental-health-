@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
-import type { Model } from "mongoose"
-import type { CreateChatDto } from "./dto/create-chat.dto"
-import type { UpdateChatDto } from "./dto/update-chat.dto"
+import { Model } from "mongoose"
+import { CreateChatDto } from "./dto/create-chat.dto"
+import { UpdateChatDto } from "./dto/update-chat.dto"
 import { Chat } from "./schemas/chat.entity"
 
 @Injectable()

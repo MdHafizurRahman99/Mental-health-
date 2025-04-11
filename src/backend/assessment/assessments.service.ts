@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
-import type { Model } from "mongoose"
-import type { CreateAssessmentDto } from "./dto/create-assessment.dto"
-import type { UpdateAssessmentDto } from "./dto/update-assessment.dto"
+import { Model } from "mongoose"
+import { CreateAssessmentDto } from "./dto/create-assessment.dto"
+import { UpdateAssessmentDto } from "./dto/update-assessment.dto"
 import { Assessment, AssessmentType } from "./schemas/assessment.entity"
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
-import type { Model } from "mongoose"
-import type { CreateContentDto } from "./dto/create-content.dto"
-import type { UpdateContentDto } from "./dto/update-content.dto"
+import { Model } from "mongoose"
+import { CreateContentDto } from "./dto/create-content.dto"
+import { UpdateContentDto } from "./dto/update-content.dto"
 import { Content, ContentType } from "./schemas/content.entity"
 
 @Injectable()
