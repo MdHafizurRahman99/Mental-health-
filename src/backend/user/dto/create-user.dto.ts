@@ -1,30 +1,34 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator"
+import { IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from "class-validator"
+import { UserRole } from "../schemas/user.schema"
 
 export class CreateUserDto {
-  @ApiProperty({
-    example: "John Doe",
-    description: "The name of the user",
-  })
+  @ApiProperty({ description: "Full name of the user", example: "John Doe" })
   @IsNotEmpty()
   @IsString()
-  name!: string
+  name: string
 
-  @ApiProperty({
-    example: "john@example.com",
-    description: "The email of the user",
-  })
+  @ApiProperty({ description: "Unique email address of the user", example: "john.doe@example.com" })
   @IsNotEmpty()
   @IsEmail()
-  email!: string
+  email: string
 
   @ApiProperty({
-    example: "password123",
-    description: "The password of the user",
+    description: "Password for the user account (will be hashed)",
+    example: "securePassword123",
+    minLength: 8,
   })
   @IsNotEmpty()
   @IsString()
-  @MinLength(6)
-  password!: string
-}
+  @MinLength(8)
+  password: string
 
+  @ApiProperty({
+    description: "Role of the user",
+    enum: UserRole,
+    example: UserRole.USER,
+    default: UserRole.USER,
+  })
+  @IsEnum(UserRole)
+  role: UserRole = UserRole.USER
+}
