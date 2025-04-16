@@ -2,9 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } f
 import { AiLogsService } from "./ai-logs.service"
 import { CreateAiLogDto } from "./dto/create-ai-log.dto"
 import { UpdateAiLogDto } from "./dto/update-ai-log.dto"
-
-
-// Add imports at the top
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiParam, ApiBody, ApiQuery } from "@nestjs/swagger"
 import { AiLog, InteractionType } from "./schemas/ai-log.entity"
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard"
