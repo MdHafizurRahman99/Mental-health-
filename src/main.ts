@@ -6,10 +6,8 @@ import { ValidationPipe } from "@nestjs/common"
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  // Global validation pipe
   app.useGlobalPipes(new ValidationPipe())
 
-  // Swagger setup
   const config = new DocumentBuilder()
     .setTitle("NestJS Auth API")
     .setDescription("API documentation for NestJS authentication")
@@ -22,7 +20,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup("api", app, document)
 
-  await app.listen(3000)
+  await app.listen(process.env.PORT || 3000);
   console.log(`Application is running on: ${await app.getUrl()}`)
 }
 
