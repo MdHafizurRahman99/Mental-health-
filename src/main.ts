@@ -8,6 +8,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe())
 
+  app.setGlobalPrefix('mental-health');
+
   const config = new DocumentBuilder()
     .setTitle("NestJS Auth API")
     .setDescription("API documentation for NestJS authentication")
@@ -18,7 +20,8 @@ async function bootstrap() {
     .build()
 
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup("api", app, document)
+  
+  SwaggerModule.setup("mental-health/api", app, document);
 
   await app.listen(process.env.PORT || 3000);
   console.log(`Application is running on: ${await app.getUrl()}`)
