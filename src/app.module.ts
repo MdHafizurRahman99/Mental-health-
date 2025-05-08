@@ -11,6 +11,7 @@ import { GamificationModule } from "./backend/gamification/gamification.module";
 import { CheckInsModule } from "./backend/check-ins/check-ins.module";
 import { AiLogsModule } from "./backend/ai-logs/ai-logs.module";
 import { TeletherapyModule } from "./backend/teletherapy/teletherapy.module";
+import { UploadsModule } from "./backend/uploads/uploads.module";
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { TeletherapyModule } from "./backend/teletherapy/teletherapy.module";
     CheckInsModule,
     AiLogsModule,
     TeletherapyModule,
+    UploadsModule, // Uncomment if you have an uploads module
   ],
 })
 export class AppModule {}

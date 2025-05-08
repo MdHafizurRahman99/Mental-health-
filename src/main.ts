@@ -21,8 +21,10 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config)
   
-  SwaggerModule.setup("mental-health/api", app, document);
-
+  // SwaggerModule.setup("mental-health/api", app, document);
+  SwaggerModule.setup('api', app, document, {
+    jsonDocumentUrl: 'swagger/json',
+  });
   await app.listen(process.env.PORT || 3000);
   console.log(`Application is running on: ${await app.getUrl()}`)
 }
