@@ -38,7 +38,7 @@ import { UploadsModule } from "./backend/uploads/uploads.module";
     CheckInsModule,
     AiLogsModule,
     TeletherapyModule,
-    UploadsModule, // Uncomment if you have an uploads module
+    UploadsModule, 
   ],
 })
 export class AppModule {}
