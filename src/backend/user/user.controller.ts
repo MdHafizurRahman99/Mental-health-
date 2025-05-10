@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Req } from "@nestjs/common"
+import { Controller, Get, Post, Body, UseGuards, Req, Param, HttpCode } from "@nestjs/common"
 import { UserService } from "./user.service"
 import { CreateUserDto } from "./dto/create-user.dto"
 import {
@@ -9,6 +9,7 @@ import {
   ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
+  ApiParam,
 } from "@nestjs/swagger"
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard"
 import { User } from "./schemas/user.schema"
@@ -21,23 +22,49 @@ export class UserController {
   @Post()
   @ApiOperation({ 
     summary: 'Create a new user',
-    description: 'Creates a new user with the provided details and returns the user object without the password.'
+    description: 'Creates a new user with the provided details, sends a verification email, and returns the user object without the password.'
   })
   @ApiCreatedResponse({ 
-    description: 'User successfully created',
+    description: 'User successfully created and verification email sent',
     type: User,
     schema: {
       properties: {
         name: { type: 'string', example: 'John Doe' },
         email: { type: 'string', example: 'john@example.com' },
         role: { type: 'string', enum: ['user', 'therapist', 'admin'], example: 'user' },
+        isVerified: { type: 'boolean', example: false },
       }
     }
   })
   @ApiResponse({ status: 400, description: 'Bad request - Invalid input data' })
   @ApiResponse({ status: 409, description: 'Conflict - Email already exists' })
   async create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    return this.userService.create(createUserDto)
+  }
+
+  @Get('verify/:token')
+  @ApiOperation({
+    summary: 'Verify user email',
+    description: "Verifies a user's email address using the provided token."
+  })
+  @ApiParam({ name: 'token', description: 'Email verification token' })
+  @ApiOkResponse({ 
+    description: 'Email successfully verified',
+    type: User,
+    schema: {
+      properties: {
+        name: { type: 'string', example: 'John Doe' },
+        email: { type: 'string', example: 'john@example.com' },
+        role: { type: 'string', enum: ['user', 'therapist', 'admin'], example: 'user' },
+        isVerified: { type: 'boolean', example: true },
+      }
+    }
+  })
+  @ApiResponse({ status: 404, description: 'Not found - Invalid verification token' })
+  @ApiResponse({ status: 400, description: 'Bad request - Email already verified' })
+  @HttpCode(200)
+  async verifyEmail(@Param('token') token: string) {
+    return this.userService.verifyEmail(token);
   }
 
   @Get('profile')
@@ -55,6 +82,7 @@ export class UserController {
         name: { type: 'string', example: 'John Doe' },
         email: { type: 'string', example: 'john@example.com' },
         role: { type: 'string', enum: ['user', 'therapist', 'admin'], example: 'user' },
+        isVerified: { type: 'boolean', example: true },
       }
     }
   })
@@ -80,6 +108,7 @@ export class UserController {
           name: { type: "string", example: "John Doe" },
           email: { type: "string", example: "john@example.com" },
           role: { type: "string", enum: ["user", "therapist", "admin"], example: "user" },
+          isVerified: { type: "boolean", example: true },
         },
       },
     },

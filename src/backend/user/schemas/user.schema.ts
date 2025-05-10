@@ -49,6 +49,22 @@ export class User {
   })
   @Prop({ type: String, enum: UserRole, default: UserRole.USER })
   role: UserRole
+
+  @ApiProperty({
+    description: "Whether the user's email has been verified",
+    example: false,
+    default: false,
+  })
+  @Prop({ default: false })
+  isVerified: boolean
+
+  @ApiProperty({
+    description: "Token for email verification",
+    example: "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",
+    required: false,
+  })
+  @Prop()
+  verificationToken?: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

@@ -12,6 +12,7 @@ import { CheckInsModule } from "./backend/check-ins/check-ins.module";
 import { AiLogsModule } from "./backend/ai-logs/ai-logs.module";
 import { TeletherapyModule } from "./backend/teletherapy/teletherapy.module";
 import { UploadsModule } from "./backend/uploads/uploads.module";
+import { MailModule } from "./backend/mail/mail.module";
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { UploadsModule } from "./backend/uploads/uploads.module";
     AiLogsModule,
     TeletherapyModule,
     UploadsModule, 
+    MailModule
   ],
 })
 export class AppModule {}
