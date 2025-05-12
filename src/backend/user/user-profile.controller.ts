@@ -23,6 +23,7 @@ import {
   import { UploadProfileImageDto } from "./dto/upload-profile-image.dto"
   import { Express } from "express"
 import { UserProfileService } from "./user-profile.service"
+import { log } from "console"
   
   @ApiTags("user-profiles")
   @Controller("user-profiles")
@@ -140,6 +141,7 @@ import { UserProfileService } from "./user-profile.service"
     @ApiResponse({ status: 400, description: "Bad request - Invalid file" })
     @ApiResponse({ status: 404, description: "User not found" })
     async uploadProfileImage(@UploadedFile() file: Express.Multer.File, @Req() req) {
+            log("req.user", req.user)
       return this.userService.updateProfileImage(req.user.userId, file)
     }
   
