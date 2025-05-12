@@ -34,7 +34,7 @@ export class AuthService {
       throw new UnauthorizedException("Invalid credentials")
     }
 
-    const payload = { id: user._id, email: user.email, role: user.role || 'user' } // Use 'id' instead of 'sub', add 'role'
+    const payload = { id: user._id, email: user.email, role: user.role || 'user' }
 
     return {
       user,
