@@ -5,6 +5,7 @@ import { User, UserDocument } from "./schemas/user.schema"
 import { CreateUserDto } from "./dto/create-user.dto"
 import { MailService } from "../mail/mail.service"
 import { randomBytes } from "crypto"
+import { UserProfile, UserProfileDocument } from "./schemas/user-profile.schema"
 
 /**
  * Service responsible for user management operations
@@ -13,6 +14,7 @@ import { randomBytes } from "crypto"
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(UserProfile.name) private userProfileModel: Model<UserProfileDocument>,
     private mailService: MailService,
   ) {}
 
@@ -96,15 +98,24 @@ export class UserService {
    * @returns The user object without the password
    * @throws NotFoundException if no user is found with the given ID
    */
-  async findById(id: string): Promise<Partial<User>> {
-    const user = await this.userModel.findById(id)
+async findById(id: string): Promise<Partial<User & { profile: UserProfile }>> {
+    // Find the user by ID
+    const user = await this.userModel.findById(id).exec();
     if (!user) {
-      throw new NotFoundException("User not found")
+      throw new NotFoundException('User not found');
     }
 
-    // Return user without password
-    const { password, ...result } = user.toObject()
-    return result
+    // Find the associated user profile by userId
+    const userProfile = await this.userProfileModel.findOne({ userId: id }).exec();
+
+    // Convert user to plain object and exclude password
+    const { password, ...userResult } = user.toObject();
+
+    // Combine user data with profile data (if profile exists)
+    return {
+      ...userResult,
+      profile: userProfile ? userProfile.toObject() : undefined,
+    };
   }
 
   /**

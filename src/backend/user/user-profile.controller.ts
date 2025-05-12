@@ -53,20 +53,20 @@ import { log } from "console"
       return this.userService.createOrUpdateProfile(createUserProfileDto.userId, createUserProfileDto);
     }
   
-    @Get("me")
-    @ApiOperation({
-      summary: "Get current user's profile",
-      description: "Returns the profile of the currently authenticated user",
-    })
-    @ApiResponse({
-      status: 200,
-      description: "Profile retrieved successfully",
-      type: UserProfile,
-    })
-    @ApiResponse({ status: 404, description: "Profile not found" })
-    async getMyProfile(@Req() req) {
-      return this.userService.getProfileByUserId(req.user.userId)
-    }
+    // @Get("me")
+    // @ApiOperation({
+    //   summary: "Get current user's profile",
+    //   description: "Returns the profile of the currently authenticated user",
+    // })
+    // @ApiResponse({
+    //   status: 200,
+    //   description: "Profile retrieved successfully",
+    //   type: UserProfile,
+    // })
+    // @ApiResponse({ status: 404, description: "Profile not found" })
+    // async getMyProfile(@Req() req) {
+    //   return this.userService.getProfileByUserId(req.user.userId)
+    // }
   
     @Get(":userId")
     @ApiOperation({
