@@ -27,7 +27,7 @@ export class MailService {
    */
   async sendVerificationEmail(email: string, name: string, token: string): Promise<void> {
     const appUrl = this.configService.get<string>("APP_URL", "http://localhost:3000")
-    const verificationUrl = `${appUrl}/api/users/verify/${token}`
+    const verificationUrl = `${appUrl}/users/verify/${token}`
 
     await this.transporter.sendMail({
       from: `"${this.configService.get<string>("MAIL_FROM_NAME", "App Team")}" <${this.configService.get<string>("MAIL_FROM_ADDRESS", "noreply@example.com")}>`,

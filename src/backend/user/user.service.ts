@@ -1,4 +1,4 @@
-import { Injectable, ConflictException, NotFoundException, BadRequestException } from "@nestjs/common"
+import { Injectable, ConflictException, NotFoundException, BadRequestException, InternalServerErrorException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
 import { Model } from "mongoose"
 import { User, UserDocument } from "./schemas/user.schema"
@@ -24,32 +24,40 @@ export class UserService {
    * @returns The created user object without the password
    * @throws ConflictException if a user with the same email already exists
    */
-  async create(createUserDto: CreateUserDto): Promise<Partial<User>> {
+async create(createUserDto: CreateUserDto): Promise<Partial<User>> {
+  try {
     // Check if user already exists
-    const existingUser = await this.userModel.findOne({ email: createUserDto.email })
+    const existingUser = await this.userModel.findOne({ email: createUserDto.email });
     if (existingUser) {
-      throw new ConflictException("Email already exists")
+      throw new ConflictException("Email already exists");
     }
 
     // Generate verification token
-    const verificationToken = randomBytes(32).toString("hex")
+    const verificationToken = randomBytes(32).toString("hex");
 
     // Create new user with verification token
     const createdUser = new this.userModel({
       ...createUserDto,
       verificationToken,
       isVerified: false,
-    })
+    });
 
-    const savedUser = await createdUser.save()
+    const savedUser = await createdUser.save();
 
     // Send verification email
-    await this.mailService.sendVerificationEmail(savedUser.email, savedUser.name, verificationToken)
+    await this.mailService.sendVerificationEmail(savedUser.email, savedUser.name, verificationToken);
 
     // Return user without password
-    const { password, ...result } = savedUser.toObject()
-    return result
+    const { password, ...result } = savedUser.toObject();
+    return result;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    if (error instanceof ConflictException) {
+      throw error;
+    }
+    throw new InternalServerErrorException("Failed to create user");
   }
+}
 
   /**
    * Verifies a user's email using the verification token
