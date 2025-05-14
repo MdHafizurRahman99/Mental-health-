@@ -91,8 +91,15 @@ export class MembershipsService {
       }
     }
 
-    return this.membershipModel.findByIdAndUpdate(id, updateMembershipDto, { new: true }).exec()
-  }
+    const updatedMembership = await this.membershipModel
+        .findByIdAndUpdate(id, updateMembershipDto, { new: true })
+        .exec();
+      if (!updatedMembership) {
+        throw new NotFoundException(`Membership with ID ${id} not found`);
+      }
+      return updatedMembership;
+
+}
 
   async remove(id: string, currentUserId: string): Promise<Membership> {
     const membership = await this.membershipModel.findById(id).exec()
@@ -117,7 +124,11 @@ export class MembershipsService {
         }
       }
 
-      return this.membershipModel.findByIdAndDelete(id).exec()
+    const deletedMembership = await this.membershipModel.findByIdAndDelete(id).exec();
+      if (!deletedMembership) {
+        throw new NotFoundException(`Membership with ID ${id} not found`);
+      }
+      return deletedMembership;
     }
 
     // Otherwise, check if the current user is an admin of the group
@@ -132,6 +143,13 @@ export class MembershipsService {
       throw new ForbiddenException("Only group admins can remove members")
     }
 
-    return this.membershipModel.findByIdAndDelete(id).exec()
+    // return this.membershipModel.findByIdAndDelete(id).exec()
+    const deletedMembership = await this.membershipModel.findByIdAndDelete(id).exec();
+      if (!deletedMembership) {
+        throw new NotFoundException(`Membership with ID ${id} not found`);
+      }
+      return deletedMembership;
+
+
   }
 }

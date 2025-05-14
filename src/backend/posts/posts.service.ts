@@ -71,7 +71,13 @@ export class PostsService {
       throw new ForbiddenException("You can only update your own posts")
     }
 
-    return this.postModel.findByIdAndUpdate(id, updatePostDto, { new: true }).exec()
+    const updatedPost = await this.postModel
+        .findByIdAndUpdate(id, updatePostDto, { new: true })
+        .exec();
+      if (!updatedPost) {
+        throw new NotFoundException(`Post with ID ${id} not found`);
+      }
+      return updatedPost;
   }
 
   async remove(id: string, userId: string): Promise<Post> {
@@ -86,8 +92,13 @@ export class PostsService {
       throw new ForbiddenException("You can only delete your own posts")
     }
 
-    return this.postModel.findByIdAndDelete(id).exec()
-  }
+    const deletedPost = await this.postModel.findByIdAndDelete(id).exec();
+      if (!deletedPost) {
+        throw new NotFoundException(`Post with ID ${id} not found`);
+      }
+      return deletedPost;
+
+}
 
   async incrementCommentsCount(postId: string): Promise<void> {
     await this.postModel.findByIdAndUpdate(postId, { $inc: { commentsCount: 1 } }).exec()

@@ -75,7 +75,14 @@ export class ReportsService {
       throw new NotFoundException(`Report with ID ${id} not found`)
     }
 
-    return this.reportModel.findByIdAndUpdate(id, updateReportDto, { new: true }).exec()
+
+    const updatedReport = await this.reportModel
+        .findByIdAndUpdate(id, updateReportDto, { new: true })
+        .exec();
+      if (!updatedReport) {
+        throw new NotFoundException(`Report with ID ${id} not found`);
+      } 
+      return updatedReport;
   }
 
   async remove(id: string, userRole: UserRole): Promise<Report> {
@@ -90,6 +97,10 @@ export class ReportsService {
       throw new NotFoundException(`Report with ID ${id} not found`)
     }
 
-    return this.reportModel.findByIdAndDelete(id).exec()
+    const deletedReport = await this.reportModel.findByIdAndDelete(id).exec();
+      if (!deletedReport) {
+        throw new NotFoundException(`Report with ID ${id} not found`);
+      }
+      return deletedReport;
   }
 }

@@ -72,6 +72,10 @@ export class SharesService {
       throw new NotFoundException(`Share with ID ${id} not found`)
     }
 
-    return this.shareModel.findByIdAndDelete(id).exec()
+    const deletedShare = await this.shareModel.findByIdAndDelete(id).exec();
+      if (!deletedShare) {
+        throw new NotFoundException(`Share with ID ${id} not found`);
+      }
+    return deletedShare;
   }
 }

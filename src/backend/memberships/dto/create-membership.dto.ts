@@ -10,7 +10,7 @@ export class CreateMembershipDto {
   })
   @IsNotEmpty()
   @IsMongoId()
-  groupId: Types.ObjectId
+  groupId: string
 
   @ApiProperty({
     description: "ID of the user",
@@ -28,4 +28,6 @@ export class CreateMembershipDto {
   })
   @IsEnum(MembershipRole)
   role: MembershipRole = MembershipRole.MEMBER
+
+
 }

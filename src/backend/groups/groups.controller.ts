@@ -75,7 +75,7 @@ export class GroupsController {
   @ApiResponse({ status: 404, description: "Group not found" })
   update(@Param("id") id: string, @Body() updateGroupDto: UpdateGroupDto, @Req() req) {
     updateGroupDto.updatedBy = req.user.userId
-    return this.groupsService.update(id, updateGroupDto)
+    return this.groupsService.update(id, updateGroupDto, req.user.userId)
   }
 
   @Delete(":id")
@@ -85,7 +85,7 @@ export class GroupsController {
   @ApiParam({ name: "id", description: "Group ID" })
   @ApiResponse({ status: 204, description: "Group successfully deleted" })
   @ApiResponse({ status: 404, description: "Group not found" })
-  remove(@Param("id") id: string) {
-    return this.groupsService.remove(id)
+  remove(@Param("id") id: string, @Req() req) {
+    return this.groupsService.remove(id, req.user.userId)
   }
 }

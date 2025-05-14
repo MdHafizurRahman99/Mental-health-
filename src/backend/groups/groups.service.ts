@@ -4,6 +4,8 @@ import { Model } from "mongoose"
 import { Group, GroupDocument } from "./schemas/group.schema"
 import { CreateGroupDto } from "./dto/create-group.dto"
 import { UpdateGroupDto } from "./dto/update-group.dto"
+import { MembershipsService } from "../memberships/memberships.service"
+import { MembershipRole } from "../memberships/schemas/membership.schema"
 
 @Injectable()
 export class GroupsService {
@@ -18,7 +20,7 @@ export class GroupsService {
 
     // Automatically add the creator as an admin
     await this.membershipsService.create({
-      groupId: savedGroup._id,
+      groupId: savedGroup._id.toString(), // Convert ObjectId to string
       userId: createGroupDto.createdBy,
       role: MembershipRole.ADMIN,
     })
@@ -62,7 +64,13 @@ export class GroupsService {
       throw new ForbiddenException("You do not have permission to update this group")
     }
 
-    return this.groupModel.findByIdAndUpdate(id, updateGroupDto, { new: true }).exec()
+    const updatedGroup = await this.groupModel
+        .findByIdAndUpdate(id, updateGroupDto, { new: true })
+        .exec();
+      if (!updatedGroup) {
+        throw new NotFoundException(`Group with ID ${id} not found`);
+      }
+      return updatedGroup;
   }
 
   async remove(id: string, userId: string): Promise<Group> {
@@ -77,6 +85,10 @@ export class GroupsService {
       throw new ForbiddenException("Only the group creator can delete the group")
     }
 
-    return this.groupModel.findByIdAndDelete(id).exec()
-  }
+  const deletedGroup = await this.groupModel.findByIdAndDelete(id).exec();
+    if (!deletedGroup) {
+      throw new NotFoundException(`Group with ID ${id} not found`);
+    }
+    return deletedGroup;
+    }
 }

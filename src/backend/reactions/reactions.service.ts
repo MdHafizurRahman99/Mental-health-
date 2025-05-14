@@ -94,8 +94,10 @@ export class ReactionsService {
     } else if (reaction.targetType === TargetType.COMMENT) {
       await this.commentsService.decrementReactionsCount(reaction.targetId.toString())
     }
-
-    return deletedReaction
+      if (!deletedReaction) {
+        throw new NotFoundException(`Reaction with ID ${id} not found`);
+      }
+      return deletedReaction;
   }
 
   async removeByTarget(userId: string, targetType: TargetType, targetId: string): Promise<void> {

@@ -30,4 +30,7 @@ export class UpdateGroupDto extends PartialType(CreateGroupDto) {
   @IsOptional()
   @IsUrl()
   coverImageUrl?: string
+  @IsOptional()
+  @IsString()
+  updatedBy?: string;
 }

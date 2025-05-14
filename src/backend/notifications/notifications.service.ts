@@ -82,8 +82,14 @@ export class NotificationsService {
       throw new ForbiddenException("You do not have permission to update this notification")
     }
 
-    return this.notificationModel.findByIdAndUpdate(id, updateNotificationDto, { new: true }).exec()
-  }
+    const updatedNotification = await this.notificationModel
+          .findByIdAndUpdate(id, updateNotificationDto, { new: true })
+          .exec();
+        if (!updatedNotification) {
+          throw new NotFoundException(`Notification with ID ${id} not found`);
+        }
+        return updatedNotification;
+    }
 
   async markAllAsRead(userId: string): Promise<void> {
     await this.notificationModel.updateMany({ userId, isRead: false }, { isRead: true }).exec()
@@ -101,7 +107,11 @@ export class NotificationsService {
       throw new ForbiddenException("You do not have permission to delete this notification")
     }
 
-    return this.notificationModel.findByIdAndDelete(id).exec()
+  const deletedNotification = await this.notificationModel.findByIdAndDelete(id).exec();
+    if (!deletedNotification) {
+      throw new NotFoundException(`Notification with ID ${id} not found`);
+    }
+  return deletedNotification;
   }
 
   async removeAll(userId: string): Promise<void> {
