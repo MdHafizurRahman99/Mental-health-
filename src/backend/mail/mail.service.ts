@@ -9,8 +9,8 @@ export class MailService {
   constructor(private configService: ConfigService) {
     // Create a nodemailer transporter
     this.transporter = nodemailer.createTransport({
-      host: this.configService.get<string>("MAIL_HOST", "smtp.gmail.com"),
-      port: this.configService.get<number>("MAIL_PORT", 587),
+      host: this.configService.get<string>("MAIL_HOST", "mentalhealth.hexreal.com"),
+      port: this.configService.get<number>("MAIL_PORT", 465),
       secure: this.configService.get<boolean>("MAIL_SECURE", false),
       auth: {
         user: this.configService.get<string>("MAIL_USER"),
@@ -27,7 +27,7 @@ export class MailService {
    */
   async sendVerificationEmail(email: string, name: string, token: string): Promise<void> {
     const appUrl = this.configService.get<string>("APP_URL", "http://localhost:3000")
-    const verificationUrl = `${appUrl}/users/verify/${token}`
+    const verificationUrl = `${appUrl}/users/verify/${token}` 
 
     await this.transporter.sendMail({
       from: `"${this.configService.get<string>("MAIL_FROM_NAME", "App Team")}" <${this.configService.get<string>("MAIL_FROM_ADDRESS", "noreply@example.com")}>`,
