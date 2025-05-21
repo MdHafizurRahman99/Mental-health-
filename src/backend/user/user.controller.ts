@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseGuards, HttpCode, Body } from "@nestjs/common"
+import { Controller, Get, Post, UseGuards, HttpCode, Body, Param } from "@nestjs/common"
 import { UserService } from "./user.service"
 import { CreateUserDto } from "./dto/create-user.dto"
 import {
@@ -95,7 +95,7 @@ export class UserController {
   @ApiResponse({ status: 404, description: "Not found - Invalid verification token" })
   @ApiResponse({ status: 400, description: "Bad request - Email already verified" })
   @HttpCode(200)
-  async verifyEmail(token: string) {
+  async verifyEmail(@Param('token') token: string) {
     return this.userService.verifyEmail(token)
   }
 

@@ -12,6 +12,7 @@ import { MailService } from "../mail/mail.service"
 import { randomBytes } from "crypto"
 import { UserProfile, UserProfileDocument } from "./schemas/user-profile.schema"
 import { InjectModel } from "@nestjs/mongoose"
+import { log } from "console"
 
 /**
  * Service responsible for user management operations
@@ -115,11 +116,13 @@ export class UserService {
    * @throws NotFoundException if no user is found with the given token
    */
   async verifyEmail(token: string): Promise<Partial<User>> {
+    log(token)
     const user = await this.userModel.findOne({ verificationToken: token })
 
     if (!user) {
       throw new NotFoundException("Invalid verification token")
     }
+    log(user)
 
     if (user.isVerified) {
       throw new BadRequestException("Email already verified")
