@@ -25,9 +25,9 @@ export class MailService {
    * @param name - User's name
    * @param token - Verification token
    */
-  async sendVerificationEmail(email: string, name: string, token: string): Promise<void> {
+  async sendVerificationEmail(email: string, name: string, token: number): Promise<void> {
     const appUrl = this.configService.get<string>("APP_URL", "http://localhost:3000")
-    const verificationUrl = `${appUrl}/users/verify/${token}` 
+    // const verificationUrl = `${appUrl}/users/verify/${token}` 
 
     await this.transporter.sendMail({
       from: `"${this.configService.get<string>("MAIL_FROM_NAME", "App Team")}" <${this.configService.get<string>("MAIL_FROM_ADDRESS", "noreply@example.com")}>`,
@@ -36,16 +36,14 @@ export class MailService {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>Hello ${name},</h2>
-          <p>Thank you for registering with our application. Please verify your email address by clicking the button below:</p>
+          <p>Thank you for registering with our application. Please verify your email address.</p>
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${verificationUrl}" style="background-color: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">
-              Verify Email Address
-            </a>
+                <span style="background-color: #4CAF50; color: white; padding: 12px 24px; border-radius: 4px; font-weight: bold;">
+                  ${token}
+                </span>
           </div>
           <p>If you did not create an account, no further action is required.</p>
-          <p>If you're having trouble clicking the button, copy and paste the following link into your web browser:</p>
-          <p>${verificationUrl}</p>
-          <p>Regards,<br>The App Team</p>
+          <p>Regards,<br>Mental Health App Team</p>
         </div>
       `,
     })
